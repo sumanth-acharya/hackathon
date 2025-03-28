@@ -33,7 +33,22 @@
             <header>
                 <h1>ZETA AI Chat</h1>
                 <div class="header-right">
-                    <button class="profile-btn">A</button>
+                    <div class="user-profile">
+                        <button class="profile-btn" id="profileBtn" aria-expanded="false">
+                            <span class="profile-initial">A</span>
+                        </button>
+                        <div class="profile-dropdown" id="userDropdown">
+                            <div class="dropdown-header">
+                                <span class="user-name" id="userName">User</span>
+                                <span class="user-email" id="userEmail">user@example.com</span>
+                            </div>
+                            <div class="dropdown-divider"></div>
+                            <button class="dropdown-item" id="logoutBtn">
+                                <i class="fas fa-sign-out-alt"></i>
+                                <span>Logout</span>
+                            </button>
+                        </div>
+                    </div>
                     <button class="notification-btn">📫</button>
                     <button id="theme-toggle">🌙</button>
                 </div>
