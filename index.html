@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZETA AI</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <button class="menu-toggle" id="menuToggle">
+            <i class="fas fa-bars"></i>
+        </button>
+        <h1>ZETA AI</h1>
+        <div class="header-right">
+            <button class="profile-btn">👤</button>
+            <button id="logoutBtn">📤</button>
+            <button id="theme-toggle">🌙</button>
+        </div>
+    </header>
+
+    <aside class="menu" id="sideMenu">
+        <h2>Menu</h2>
+        <ul>
+            <li><a href="index.html" class="active">🏠 Home</a></li>
+            <li><a href="chat.html">💬 Chat</a></li>
+            <li><a href="#">📊 Dashboard</a></li>
+            <li><a href="#">⚙️ Settings</a></li>
+        </ul>
+    </aside>
+
+    <main class="home-container">
+        <section class="hero-section">
+            <h2>Welcome to ZETA AI</h2>
+            <p>Your intelligent AI assistant for seamless conversations and problem-solving.</p>
+            <a href="chat.html" class="cta-button">Start Chatting <i class="fas fa-arrow-right"></i></a>
+        </section>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <i class="fas fa-robot"></i>
+                <h3>AI-Powered Chat</h3>
+                <p>Experience natural conversations with our advanced AI system.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-bolt"></i>
+                <h3>Real-time Responses</h3>
+                <p>Get instant answers to your questions and queries.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-shield-alt"></i>
+                <h3>Secure Platform</h3>
+                <p>Your conversations are private and protected.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-history"></i>
+                <h3>Chat History</h3>
+                <p>Access your previous conversations anytime.</p>
+            </div>
+        </div>
+
+        <section class="info-section">
+            <h2>Why Choose ZETA AI?</h2>
+            <div class="info-grid">
+                <div class="info-item">
+                    <h3>24/7 Availability</h3>
+                    <p>Get assistance whenever you need it, day or night.</p>
+                </div>
+                <div class="info-item">
+                    <h3>Smart Learning</h3>
+                    <p>Our AI continuously learns and improves from interactions.</p>
+                </div>
+                <div class="info-item">
+                    <h3>Multiple Topics</h3>
+                    <p>Get help with various subjects and questions.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="js/auth.js"></script>
+    <script src="js/theme.js"></script>
+    <script src="js/menu.js"></script>
+</body>
+</html>
