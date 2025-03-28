@@ -3,7 +3,6 @@ class ThemeManager {
         this.themeToggle = document.getElementById('theme-toggle');
         this.currentTheme = localStorage.getItem('theme') || 'dark';
         
-        // Initialize theme
         this.init();
     }
 
@@ -11,44 +10,32 @@ class ThemeManager {
         // Set initial theme
         this.setTheme(this.currentTheme);
         
-        // Add click event listener to theme toggle button
+        // Add click event listener
         this.themeToggle.addEventListener('click', () => this.toggleTheme());
-
-        // Update button aria-label for accessibility
-        this.updateToggleButton();
     }
 
     setTheme(theme) {
         document.documentElement.setAttribute('data-theme', theme);
         localStorage.setItem('theme', theme);
         this.currentTheme = theme;
-        this.updateToggleButton();
+        
+        // Update button icon and color
+        if (theme === 'dark') {
+            this.themeToggle.innerHTML = '☀️';
+            document.body.style.backgroundColor = '#111111';
+        } else {
+            this.themeToggle.innerHTML = '🌙';
+            document.body.style.backgroundColor = '#f5f5f5';
+        }
     }
 
     toggleTheme() {
-        const newTheme = this.currentTheme === 'light' ? 'dark' : 'light';
+        const newTheme = this.currentTheme === 'dark' ? 'light' : 'dark';
         this.setTheme(newTheme);
-        
-        // Add animation to the toggle button
-        this.themeToggle.style.transform = 'rotate(360deg)';
-        setTimeout(() => {
-            this.themeToggle.style.transform = 'none';
-        }, 300);
-    }
-
-    updateToggleButton() {
-        // Update button icon and aria-label based on current theme
-        if (this.currentTheme === 'dark') {
-            this.themeToggle.textContent = '☀️';
-            this.themeToggle.setAttribute('aria-label', 'Switch to light mode');
-        } else {
-            this.themeToggle.textContent = '🌙';
-            this.themeToggle.setAttribute('aria-label', 'Switch to dark mode');
-        }
     }
 }
 
-// Initialize ThemeManager when DOM is loaded
+// Initialize theme manager when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    const themeManager = new ThemeManager();
+    new ThemeManager();
 }); 

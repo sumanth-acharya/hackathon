@@ -77,84 +77,68 @@ document.addEventListener('DOMContentLoaded', function() {
 
 class Auth {
     constructor() {
-        this.isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-        this.currentUser = localStorage.getItem('username');
+        this.loginForm = document.getElementById('loginForm');
+        this.logoutBtn = document.getElementById('logoutBtn');
+        this.init();
     }
 
     init() {
-        // Initialize auth-related elements
-        const loginForm = document.getElementById('loginForm');
-        const registerForm = document.getElementById('registerForm');
-        const logoutBtn = document.getElementById('logoutBtn');
+        // Check if user is logged in
+        const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+        const currentPage = window.location.pathname;
 
-        if (loginForm) loginForm.addEventListener('submit', (e) => this.handleLogin(e));
-        if (registerForm) registerForm.addEventListener('submit', (e) => this.handleRegister(e));
-        if (logoutBtn) logoutBtn.addEventListener('click', () => this.handleLogout());
-
-        // Check authentication status on protected pages
-        if (window.location.pathname.includes('chat.html') && !this.isLoggedIn) {
+        if (!isLoggedIn && !currentPage.includes('login.html')) {
             window.location.href = 'login.html';
+            return;
         }
 
-        // Update UI based on auth status
-        this.updateUI();
+        if (isLoggedIn && currentPage.includes('login.html')) {
+            window.location.href = 'index.html';
+            return;
+        }
+
+        // Add event listeners
+        if (this.loginForm) {
+            this.loginForm.addEventListener('submit', (e) => this.handleLogin(e));
+        }
+
+        if (this.logoutBtn) {
+            this.logoutBtn.addEventListener('click', () => this.handleLogout());
+        }
+
+        // Update UI if logged in
+        if (isLoggedIn) {
+            const username = localStorage.getItem('username');
+            const profileBtn = document.querySelector('.profile-btn');
+            if (profileBtn && username) {
+                profileBtn.textContent = username.charAt(0).toUpperCase();
+            }
+        }
     }
 
-    handleLogin(event) {
-        event.preventDefault();
+    handleLogin(e) {
+        e.preventDefault();
         
         const username = document.getElementById('username').value;
         const password = document.getElementById('password').value;
         
+        // Get users from localStorage
         const users = JSON.parse(localStorage.getItem('users') || '[]');
         const user = users.find(u => u.username === username && u.password === password);
         
         if (user) {
-            this.setLoggedIn(username);
-            window.location.href = 'chat.html';
+            localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('username', username);
+            window.location.href = 'index.html';
         } else {
             this.showError('Invalid username or password');
         }
-    }
-
-    handleRegister(event) {
-        event.preventDefault();
-        
-        const username = document.getElementById('username').value;
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
-        const confirmPassword = document.getElementById('confirmPassword').value;
-        
-        if (password !== confirmPassword) {
-            this.showError('Passwords do not match');
-            return;
-        }
-        
-        const users = JSON.parse(localStorage.getItem('users') || '[]');
-        
-        if (users.some(user => user.username === username)) {
-            this.showError('Username already exists');
-            return;
-        }
-        
-        users.push({ username, email, password });
-        localStorage.setItem('users', JSON.stringify(users));
-        
-        this.setLoggedIn(username);
-        window.location.href = 'chat.html';
     }
 
     handleLogout() {
         localStorage.removeItem('isLoggedIn');
         localStorage.removeItem('username');
         window.location.href = 'login.html';
-    }
-
-    setLoggedIn(username) {
-        localStorage.setItem('isLoggedIn', 'true');
-        localStorage.setItem('username', username);
-        this.isLoggedIn = true;
-        this.currentUser = username;
     }
 
     showError(message) {
@@ -167,17 +151,9 @@ class Auth {
         
         setTimeout(() => errorDiv.remove(), 3000);
     }
-
-    updateUI() {
-        const profileBtn = document.querySelector('.profile-btn');
-        if (profileBtn && this.currentUser) {
-            profileBtn.textContent = this.currentUser.charAt(0).toUpperCase();
-        }
-    }
 }
 
-// Initialize auth on page load
+// Initialize Auth when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    const auth = new Auth();
-    auth.init();
+    new Auth();
 }); 
