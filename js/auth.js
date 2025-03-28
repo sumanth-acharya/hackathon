@@ -84,35 +84,21 @@ class Auth {
 
     init() {
         // Check if user is logged in
-        const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-        const currentPage = window.location.pathname;
-
-        if (!isLoggedIn && !currentPage.includes('login.html')) {
+        if (!localStorage.getItem('isLoggedIn') && !window.location.href.includes('login.html')) {
             window.location.href = 'login.html';
             return;
         }
 
-        if (isLoggedIn && currentPage.includes('login.html')) {
-            window.location.href = 'index.html';
-            return;
-        }
-
-        // Add event listeners
-        if (this.loginForm) {
-            this.loginForm.addEventListener('submit', (e) => this.handleLogin(e));
-        }
-
+        // Add logout handler
         if (this.logoutBtn) {
             this.logoutBtn.addEventListener('click', () => this.handleLogout());
         }
 
-        // Update UI if logged in
-        if (isLoggedIn) {
-            const username = localStorage.getItem('username');
-            const profileBtn = document.querySelector('.profile-btn');
-            if (profileBtn && username) {
-                profileBtn.textContent = username.charAt(0).toUpperCase();
-            }
+        // Update profile button if logged in
+        const username = localStorage.getItem('username');
+        const profileBtn = document.querySelector('.profile-btn');
+        if (profileBtn && username) {
+            profileBtn.textContent = username.charAt(0).toUpperCase();
         }
     }
 
